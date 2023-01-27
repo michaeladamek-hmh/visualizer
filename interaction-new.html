@@ -1,0 +1,659 @@
+<html lang="en" class="unsupported-fullscreen">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./css/source.css">
+  <title>Visualizer</title>
+  <style> 
+  .anatomy-main {
+	width: 100%;
+	font-size: 0.9rem;
+	line-height: 1.5;
+	-webkit-box-ordinal-group: 4;
+	-webkit-order: 3;
+	-ms-flex-order: 3;
+	order: 3;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+  }
+
+  @media (min-width: 650px) {
+	.anatomy-main {
+	  -webkit-box-flex: 1;
+	  -webkit-flex: 1;
+	  -ms-flex: 1;
+	  flex: 1;
+	  overflow: hidden;
+	  -webkit-box-ordinal-group: unset;
+	  -webkit-order: unset;
+	  -ms-flex-order: unset;
+	  order: unset;
+	}
+  }
+
+  .widget-controls.wide,
+  .widget-controls,
+  .audio-controls.wide,
+  .audio-controls {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width: 50%;
+	z-index: 1;
+  }
+
+  @media (min-width: 650px) {
+
+	.widget-controls.wide,
+	.widget-controls,
+	.audio-controls.wide,
+	.audio-controls {
+	  width: 40px;
+	}
+
+	.widget-controls.wide>section,
+	.widget-controls>section,
+	.audio-controls.wide>section,
+	.audio-controls>section {
+	  -webkit-box-sizing: border-box;
+	  box-sizing: border-box;
+	}
+  }
+
+  .widget-controls.wide,
+  .widget-controls {
+	-webkit-box-ordinal-group: 2;
+	-webkit-order: 1;
+	-ms-flex-order: 1;
+	order: 1;
+	-webkit-box-pack: start;
+	-webkit-justify-content: flex-start;
+	-ms-flex-pack: start;
+	justify-content: flex-start;
+  }
+
+  @media (min-width: 650px) {
+
+	.widget-controls.wide,
+	.widget-controls {
+	  -webkit-box-ordinal-group: unset;
+	  -webkit-order: unset;
+	  -ms-flex-order: unset;
+	  order: unset;
+	  -webkit-box-pack: initial;
+	  -webkit-justify-content: initial;
+	  -ms-flex-pack: initial;
+	  justify-content: initial;
+	}
+
+	.widget-controls.wide>section,
+	.widget-controls>section {
+	  padding-left: 6px;
+	}
+  }
+
+  .audio-controls.wide,
+  .audio-controls {
+	-webkit-box-ordinal-group: 3;
+	-webkit-order: 2;
+	-ms-flex-order: 2;
+	order: 2;
+	-webkit-box-pack: end;
+	-webkit-justify-content: flex-end;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+	text-align: right;
+	margin-bottom: 8px;
+  }
+
+  @media (min-width: 650px) {
+
+	.audio-controls.wide,
+	.audio-controls {
+	  -webkit-box-ordinal-group: unset;
+	  -webkit-order: unset;
+	  -ms-flex-order: unset;
+	  order: unset;
+	  -webkit-box-pack: initial;
+	  -webkit-justify-content: initial;
+	  -ms-flex-pack: initial;
+	  justify-content: initial;
+	  text-align: left;
+	}
+
+	.audio-controls.wide>section,
+	.audio-controls>section {
+	  padding-right: 6px;
+	}
+  }
+
+  button::-moz-focus-inner,
+  input::-moz-focus-inner,
+  input::-moz-focus-outer {
+	border: 0;
+	cursor: pointer;
+  }
+
+  button:focus,
+  .audio-controls button:focus,
+  .widget-controls button:focus,
+  .feedback-button:focus,
+  .focusable:focus {
+	outline: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+  }
+
+  button:focus .focusable,
+  .audio-controls button:focus .focusable,
+  .widget-controls button:focus .focusable,
+  .feedback-button:focus .focusable {
+	-webkit-box-shadow: 0px 0px 0px 1px #fff, 0px 0px 0px 3px #ca0092,
+	  0 0 0 4px #fff;
+	box-shadow: 0px 0px 0px 1px #fff, 0px 0px 0px 3px #ca0092, 0 0 0 4px #fff;
+  }
+
+	.controls-button-wrapper {
+	width: 40px;
+	height: 32px;
+	display: inline-block;
+	position: relative;
+	}
+
+	@media (min-width: 650px) {
+	.controls-button-wrapper {
+		height: 40px;
+		display: block;
+	}
+	}
+
+	.controls-button-wrapper button,
+	.controls-button-wrapper button:enabled,
+	.controls-button-wrapper button .focusable {
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 50%;
+	cursor: pointer;
+	width: 28px;
+	height: 28px;
+	background-position: 4px 4px;
+	position: relative;
+	}
+
+	@media (min-width: 650px) {
+
+	.controls-button-wrapper button,
+	.controls-button-wrapper button:enabled,
+	.controls-button-wrapper button .focusable {
+		height: 34px;
+		width: 34px;
+		background-position: 7px 7px;
+	}
+	}
+
+	.controls-button-wrapper button .focusable {
+	position: absolute;
+	background: transparent;
+	top: -2px;
+	left: -2px;
+	border: 0;
+	}
+
+	.audio-controls .controls-button-wrapper button .focusable {
+	right: 0;
+	left: -2px;
+	}
+
+	@media (min-width: 650px) {
+	.audio-controls .controls-button-wrapper button .focusable {
+		right: unset;
+	}
+	}
+
+	button.audio-play {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/audio-play-mid</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/audio-play-mid" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="audio-play-mid"><rect id="Rectangle-2" fill-opacity="0" fill="%23FFFFFF" x="0" y="0" width="16" height="16"></rect><path d="M15.7773501,8.43401801 C16.0742166,8.22754744 16.0742166,7.77245256 15.7773501,7.56598199 L10.7773501,4.08848379 C10.4450727,3.857385 10,4.10588253 10,4.5225018 L10,11.4774982 C10,11.8941175 10.4450727,12.142615 10.7773501,11.9115162 L15.7773501,8.43401801 Z" id="Triangle" fill="%236A6D6D" fill-rule="nonzero"></path><path d="M2.29902531,10.6642844 L5.44815651,14.0758432 C5.72242374,14.372966 6.21875,14.1789105 6.21875,13.7745536 L6.21875,2.22544643 C6.21875,1.82108954 5.72242374,1.62703399 5.44815651,1.92415683 L2.30067613,5.33392724 L0.436205497,5.33392724 C0.202447389,5.33392724 0,5.52922309 0,5.77013273 L0,10.2280789 C0,10.461837 0.195295853,10.6642844 0.436205497,10.6642844 L2.29902531,10.6642844 Z" id="Combined-Shape" fill="%236A6D6D" fill-rule="nonzero"></path></g></g></svg>');
+	background-repeat: no-repeat;
+	}
+
+	button.audio-play:hover {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/audio-play-xdark</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/audio-play-xdark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="audio-play-xdark"><rect id="Rectangle-2" fill-opacity="0" fill="%23FFFFFF" x="0" y="0" width="16" height="16"></rect><path d="M15.7773501,8.43401801 C16.0742166,8.22754744 16.0742166,7.77245256 15.7773501,7.56598199 L10.7773501,4.08848379 C10.4450727,3.857385 10,4.10588253 10,4.5225018 L10,11.4774982 C10,11.8941175 10.4450727,12.142615 10.7773501,11.9115162 L15.7773501,8.43401801 Z" id="Triangle" fill="%232D2D2D" fill-rule="nonzero"></path><path d="M2.29902531,10.6642844 L5.44815651,14.0758432 C5.72242374,14.372966 6.21875,14.1789105 6.21875,13.7745536 L6.21875,2.22544643 C6.21875,1.82108954 5.72242374,1.62703399 5.44815651,1.92415683 L2.30067613,5.33392724 L0.436205497,5.33392724 C0.202447389,5.33392724 0,5.52922309 0,5.77013273 L0,10.2280789 C0,10.461837 0.195295853,10.6642844 0.436205497,10.6642844 L2.29902531,10.6642844 Z" id="Combined-Shape" fill="%232D2D2D" fill-rule="nonzero"></path></g></g></svg>');
+	}
+
+	button.audio-play.selected {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/audio-pause-xxlight</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/audio-pause-xxlight" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Group-90" fill="%23FFFFFF"><rect id="Rectangle-2" fill-opacity="0" x="0" y="0" width="16" height="16"></rect><rect id="Rectangle" x="13.9667969" y="4" width="2" height="8" rx="0.5"></rect><rect id="Rectangle" x="9.96679688" y="4" width="2" height="8" rx="0.5"></rect><path d="M2.29902531,10.6642844 L5.44815651,14.0758432 C5.72242374,14.372966 6.21875,14.1789105 6.21875,13.7745536 L6.21875,2.22544643 C6.21875,1.82108954 5.72242374,1.62703399 5.44815651,1.92415683 L2.30067613,5.33392724 L0.436205497,5.33392724 C0.202447389,5.33392724 0,5.52922309 0,5.77013273 L0,10.2280789 C0,10.461837 0.195295853,10.6642844 0.436205497,10.6642844 L2.29902531,10.6642844 Z" id="Combined-Shape" fill-rule="nonzero"></path></g></g></svg>');
+	}
+
+	button.audio-refresh {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/audio-replay-mid</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/audio-replay-mid" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="audio-replay-mid"><rect id="Rectangle-2" fill-opacity="0" fill="%23FFFFFF" x="0" y="0" width="16" height="16"></rect><path d="M10.2121861,6.18177395 C9.23587536,7.15808468 9.23587536,8.74099713 10.2121861,9.71730785 C11.1884968,10.6936186 12.7714093,10.6936186 13.74772,9.71730785 C14.0406132,9.42441464 14.5154869,9.42441464 14.8083802,9.71730785 C15.1012734,10.0102011 15.1012734,10.4850748 14.8083802,10.777968 C13.246283,12.3400652 10.7136231,12.3400652 9.15152591,10.777968 C7.58942875,9.21587086 7.58942875,6.68321094 9.15152591,5.12111378 C10.4102134,3.86242625 12.2990502,3.61794854 13.8025283,4.38768067 L15.1519238,2.0504591 L16,6.58154801 L11.6519238,8.11263692 L13.0507867,5.68973524 C12.1227765,5.25002009 10.979927,5.41403299 10.2121861,6.18177395 Z" id="Combined-Shape" fill="%236A6D6D" fill-rule="nonzero" transform="translate(11.989977, 7.000000) scale(-1, 1) translate(-11.989977, -7.000000) "></path></g><path d="M2.29902531,10.6642844 L5.44815651,14.0758432 C5.72242374,14.372966 6.21875,14.1789105 6.21875,13.7745536 L6.21875,2.22544643 C6.21875,1.82108954 5.72242374,1.62703399 5.44815651,1.92415683 L2.30067613,5.33392724 L0.436205497,5.33392724 C0.202447389,5.33392724 0,5.52922309 0,5.77013273 L0,10.2280789 C0,10.461837 0.195295853,10.6642844 0.436205497,10.6642844 L2.29902531,10.6642844 Z" id="Combined-Shape" fill="%236A6D6D" fill-rule="nonzero"></path></g></svg>');
+	background-repeat: no-repeat;
+	}
+
+	button.audio-refresh:hover {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/audio-replay-xdark</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/audio-replay-xdark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="audio-replay-xdark"><rect id="Rectangle-2" fill-opacity="0" fill="%23FFFFFF" x="0" y="0" width="16" height="16"></rect><path d="M10.2121861,6.07730369 C9.23587536,7.02892605 9.23587536,8.57181074 10.2121861,9.5234331 C11.1884968,10.4750555 12.7714093,10.4750555 13.74772,9.5234331 C14.0406132,9.23794639 14.5154869,9.23794639 14.8083802,9.5234331 C15.1012734,9.80891981 15.1012734,10.2717852 14.8083802,10.5572719 C13.246283,12.0798677 10.7136231,12.0798677 9.15152591,10.5572719 C7.58942875,9.03467615 7.58942875,6.56606064 9.15152591,5.04346487 C10.4102134,3.81660629 12.2990502,3.57831079 13.8025283,4.32857839 L15.1519238,2.0504591 L16,6.4669685 L11.6519238,7.95934014 L13.0507867,5.59770736 C12.1227765,5.16911148 10.979927,5.32897692 10.2121861,6.07730369 Z" id="Combined-Shape" fill="%232D2D2D" fill-rule="nonzero" transform="translate(11.989977, 6.874839) scale(-1, 1) translate(-11.989977, -6.874839) "></path><path d="M10.2121861,6.07730369 C9.23587536,7.02892605 9.23587536,8.57181074 10.2121861,9.5234331 C11.1884968,10.4750555 12.7714093,10.4750555 13.74772,9.5234331 C14.0406132,9.23794639 14.5154869,9.23794639 14.8083802,9.5234331 C15.1012734,9.80891981 15.1012734,10.2717852 14.8083802,10.5572719 C13.246283,12.0798677 10.7136231,12.0798677 9.15152591,10.5572719 C7.58942875,9.03467615 7.58942875,6.56606064 9.15152591,5.04346487 C10.4102134,3.81660629 12.2990502,3.57831079 13.8025283,4.32857839 L15.1519238,2.0504591 L16,6.4669685 L11.6519238,7.95934014 L13.0507867,5.59770736 C12.1227765,5.16911148 10.979927,5.32897692 10.2121861,6.07730369 Z" id="Combined-Shape" fill="%232D2D2D" fill-rule="nonzero" transform="translate(11.989977, 6.874839) scale(-1, 1) translate(-11.989977, -6.874839) "></path></g><path d="M2.29902531,10.6642844 L5.44815651,14.0758432 C5.72242374,14.372966 6.21875,14.1789105 6.21875,13.7745536 L6.21875,2.22544643 C6.21875,1.82108954 5.72242374,1.62703399 5.44815651,1.92415683 L2.30067613,5.33392724 L0.436205497,5.33392724 C0.202447389,5.33392724 0,5.52922309 0,5.77013273 L0,10.2280789 C0,10.461837 0.195295853,10.6642844 0.436205497,10.6642844 L2.29902531,10.6642844 Z" id="Combined-Shape" fill="%232D2D2D" fill-rule="nonzero"></path></g></svg>');
+	}
+
+	button.audio-refresh.selected {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/tip-xxlight</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/tip-xxlight" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="tip-xxlight" fill="%23FFFFFF"><rect id="Rectangle-2" fill-opacity="0" x="0" y="0" width="16" height="16"></rect><path d="M9,7 L9,14 L11,14 L11,16 L5,16 L5,14 L7,14 L7,8 L5,8 L5,6 L8,6 C8.6,6 9,6.4 9,7 Z M7.5,3 C6.67157288,3 6,2.32842712 6,1.5 C6,0.671572875 6.67157288,0 7.5,0 C8.32842712,0 9,0.671572875 9,1.5 C9,2.32842712 8.32842712,3 7.5,3 Z" id="Combined-Shape"></path></g></g></svg>');
+	}
+
+	button.reset {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/reload-mid</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/reload-mid" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="reload-mid"><rect id="Rectangle-23" fill-opacity="0" fill="%23FFFFFF" x="0" y="0" width="16" height="16"></rect><g id="refresh-20" fill="%236A6D6D" fill-rule="nonzero"><path d="M4.5,4.5 C6.4,2.6 9.6,2.6 11.5,4.5 C12.2,5.2 12.7,6.2 12.9,7.2 L14.9,6.9 C14.7,5.4 14,4.1 13,3.1 C10.3,0.4 5.9,0.4 3.1,3.1 L0.9,0.9 L0.2,7.3 L6.6,6.6 L4.5,4.5 Z" id="Shape"></path><path d="M15.8,8.7 L9.4,9.4 L11.5,11.5 C9.6,13.4 6.4,13.4 4.5,11.5 C3.8,10.8 3.3,9.8 3.1,8.8 L1.1,9.1 C1.3,10.6 2,11.9 3,12.9 C4.4,14.3 6.1,14.9 7.9,14.9 C9.7,14.9 11.5,14.2 12.8,12.9 L15,15.1 L15.8,8.7 Z" id="Shape"></path></g></g></g></svg>');
+	background-repeat: no-repeat;
+	}
+
+	button.reset:hover {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/reload-xdark</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/reload-xdark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="reload-xdark"><rect id="Rectangle-23" fill-opacity="0" fill="%23FFFFFF" x="0" y="0" width="16" height="16"></rect><g id="refresh-20" fill="%232D2D2D" fill-rule="nonzero"><path d="M4.5,4.5 C6.4,2.6 9.6,2.6 11.5,4.5 C12.2,5.2 12.7,6.2 12.9,7.2 L14.9,6.9 C14.7,5.4 14,4.1 13,3.1 C10.3,0.4 5.9,0.4 3.1,3.1 L0.9,0.9 L0.2,7.3 L6.6,6.6 L4.5,4.5 Z" id="Shape"></path><path d="M15.8,8.7 L9.4,9.4 L11.5,11.5 C9.6,13.4 6.4,13.4 4.5,11.5 C3.8,10.8 3.3,9.8 3.1,8.8 L1.1,9.1 C1.3,10.6 2,11.9 3,12.9 C4.4,14.3 6.1,14.9 7.9,14.9 C9.7,14.9 11.5,14.2 12.8,12.9 L15,15.1 L15.8,8.7 Z" id="Shape"></path></g></g></g></svg>');
+	}
+
+	button.tip {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/tip-mid</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/tip-mid" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="tip-mid"><rect id="Rectangle-2" fill-opacity="0" fill="%23FFFFFF" x="0" y="0" width="16" height="16"></rect><path d="M9,7 L9,14 L11,14 L11,16 L5,16 L5,14 L7,14 L7,8 L5,8 L5,6 L8,6 C8.6,6 9,6.4 9,7 Z M7.5,3 C6.67157288,3 6,2.32842712 6,1.5 C6,0.671572875 6.67157288,0 7.5,0 C8.32842712,0 9,0.671572875 9,1.5 C9,2.32842712 8.32842712,3 7.5,3 Z" id="Combined-Shape" fill="%236A6D6D"></path></g></g></svg>');
+	background-repeat: no-repeat;
+	}
+
+	button.tip:hover {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/tip-xdark</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/tip-xdark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="tip-xdark"><rect id="Rectangle-2" fill-opacity="0" fill="%23FFFFFF" x="0" y="0" width="16" height="16"></rect><path d="M9,7 L9,14 L11,14 L11,16 L5,16 L5,14 L7,14 L7,8 L5,8 L5,6 L8,6 C8.6,6 9,6.4 9,7 Z M7.5,3 C6.67157288,3 6,2.32842712 6,1.5 C6,0.671572875 6.67157288,0 7.5,0 C8.32842712,0 9,0.671572875 9,1.5 C9,2.32842712 8.32842712,3 7.5,3 Z" id="Combined-Shape" fill="%232D2D2D"></path></g></g></svg>');
+	}
+
+	button.tip.selected {
+	background-image: url('data:image/svg+xml;utf8,<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>chrome/icon/tip-xxlight</title><desc>Created with Sketch.</desc><defs></defs><g id="chrome/icon/tip-xxlight" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="tip-xxlight" fill="%23FFFFFF"><rect id="Rectangle-2" fill-opacity="0" x="0" y="0" width="16" height="16"></rect><path d="M9,7 L9,14 L11,14 L11,16 L5,16 L5,14 L7,14 L7,8 L5,8 L5,6 L8,6 C8.6,6 9,6.4 9,7 Z M7.5,3 C6.67157288,3 6,2.32842712 6,1.5 C6,0.671572875 6.67157288,0 7.5,0 C8.32842712,0 9,0.671572875 9,1.5 C9,2.32842712 8.32842712,3 7.5,3 Z" id="Combined-Shape"></path></g></g></svg>');
+	}
+  </style>
+  <style>
+    :root {
+      --type-size-lv1: 0.75rem;
+      --type-size-lv2: 0.875rem;
+      --type-size-lv3: 1rem;
+      --type-size-lv4: 1.0625rem;
+      --type-size-lv5: 1.1875rem;
+      --type-size-lv6: 1.25rem;
+      --type-size-lv7: 1.3125rem;
+      --type-size-lv8: 1.375rem;
+      --type-size-lv9: 1.5rem;
+      --type-size-lv10: 1.625rem;
+      --type-size-lv11: 1.875rem;
+      --type-size-lv12: 2.125rem;
+      --type-size-lv13: 2.375rem;
+      --type-size-lv14: 2.625rem;
+      --type-size-lv15: 2.625rem;
+      --type-size-lv16: 2.625rem;
+
+      --para-lheight-lv1: 1.125rem;
+      --para-lheight-lv2: 1.375rem;
+      --para-lheight-lv3: 1.5rem;
+      --para-lheight-lv4: 1.625rem;
+      --para-lheight-lv5: 1.875rem;
+      --para-lheight-lv6: 1.875rem;
+      --para-lheight-lv7: 2rem;
+      --para-lheight-lv8: 2.125rem;
+      --para-lheight-lv9: 2.25rem;
+      --para-lheight-lv10: 2.5rem;
+      --para-lheight-lv11: 2.375rem;
+      --para-lheight-lv12: 2.625rem;
+      --para-lheight-lv13: 3rem;
+      --para-lheight-lv14: 3rem;
+      --para-lheight-lv15: 3rem;
+      --para-lheight-lv16: 3rem;
+
+      --head-lheight-lv1: var(--para-lheight-lv1);
+      --head-lheight-lv2: var(--para-lheight-lv2);
+      --head-lheight-lv3: var(--para-lheight-lv3);
+      --head-lheight-lv4: var(--para-lheight-lv4);
+      --head-lheight-lv5: 1.75rem;
+      --head-lheight-lv6: 1.875rem;
+      --head-lheight-lv7: 2rem;
+      --head-lheight-lv8: 2.125rem;
+      --head-lheight-lv9: 2.25rem;
+      --head-lheight-lv10: 2.125rem;
+      --head-lheight-lv11: var(--para-lheight-lv11);
+      --head-lheight-lv12: var(--para-lheight-lv12);
+      --head-lheight-lv13: var(--para-lheight-lv13);
+      --head-lheight-lv14: var(--para-lheight-lv14);
+      --head-lheight-lv15: var(--para-lheight-lv15);
+      --head-lheight-lv16: var(--para-lheight-lv16);
+
+      --active-heading-size: var(--type-size-lv11);
+      --active-heading-lheight: var(--head-lheight-lv11);
+
+      --active-para-size: var(--type-size-lv11);
+      --active-para-lheight: var(--para-lheight-lv11);
+
+      --active-caption-size: calc(var(--type-size-lv9));
+
+      --active-base-lheight: var(--para-lheight-lv11);
+      --active-half-lheight: calc(var(--active-base-lheight) / 2);
+      --active-quart-lheight: calc(var(--active-base-lheight) / 4);
+
+      --active-border-size: 6px;
+
+      --colstart: 5;
+      --colspan: 6;
+    }
+
+    @media screen and (min-width: 51.875rem) {
+      :root {
+        --type-size-lv4: 1.125rem;
+        --type-size-lv5: 1.25rem;
+        --type-size-lv6: 1.3125rem;
+        --type-size-lv7: 1.375rem;
+        --type-size-lv8: 1.5rem;
+        --type-size-lv9: 1.625rem;
+        --type-size-lv10: 1.875rem;
+        --type-size-lv11: 2.25rem;
+        --type-size-lv12: 2.625rem;
+        --type-size-lv13: 3rem;
+        --type-size-lv14: 3.375rem;
+        --type-size-lv15: 3.75rem;
+        --type-size-lv16: 4.25rem;
+
+        --para-lheight-lv4: 1.75rem;
+        --para-lheight-lv6: 2rem;
+        --para-lheight-lv7: 2.125rem;
+        --para-lheight-lv8: 2.25rem;
+        --para-lheight-lv9: 2.5rem;
+        --para-lheight-lv10: 2.875rem;
+        --para-lheight-lv11: 2.875rem;
+        --para-lheight-lv12: 3.25rem;
+        --para-lheight-lv13: 3.75rem;
+        --para-lheight-lv14: 3.875rem;
+        --para-lheight-lv15: 4.25rem;
+        --para-lheight-lv16: 4.75rem;
+
+        --head-lheight-lv5: 1.875rem;
+        --head-lheight-lv6: 2rem;
+        --head-lheight-lv7: 2.125rem;
+        --head-lheight-lv8: 2.25rem;
+        --head-lheight-lv9: 2.375rem;
+        --head-lheight-lv10: 2.375rem;
+      }
+    }
+
+    @media screen and (min-width: 91.25rem) {
+      :root {
+        --type-size-lv6: 1.375rem;
+        --type-size-lv7: 1.5rem;
+        --type-size-lv8: 1.6875rem;
+        --type-size-lv9: 1.875rem;
+        --type-size-lv10: 2.25rem;
+        --type-size-lv11: 2.75rem;
+        --type-size-lv12: 3.25rem;
+        --type-size-lv13: 4rem;
+        --type-size-lv14: 4.75rem;
+        --type-size-lv15: 5.75rem;
+        --type-size-lv16: 7rem;
+
+        --para-lheight-lv6: 2.125rem;
+        --para-lheight-lv7: 2.25rem;
+        --para-lheight-lv8: 2.625rem;
+        --para-lheight-lv9: 2.875rem;
+        --para-lheight-lv10: 3.375rem;
+        --para-lheight-lv11: 3.5rem;
+        --para-lheight-lv12: 4.125rem;
+        --para-lheight-lv13: 5rem;
+        --para-lheight-lv14: 5.375rem;
+        --para-lheight-lv15: 6.5rem;
+        --para-lheight-lv16: 7.875rem;
+
+        --head-lheight-lv5: 1.875rem;
+        --head-lheight-lv6: 2.125rem;
+        --head-lheight-lv7: 2.25rem;
+        --head-lheight-lv8: 2.375rem;
+        --head-lheight-lv9: 2.25rem;
+        --head-lheight-lv10: 2.875rem;
+      }
+    }
+    
+    .value-pickers {
+      background-color: #EDEDED;
+      height: 100vh;
+      font-size: 1rem;
+      padding: 1rem;
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 25%;
+    }
+
+    .value-pickers strong {
+      font-size: 1.5rem;
+    }
+
+    .value-pickers nav {
+      display: flex;
+      flex-flow: column nowrap;
+    }
+
+    .value-pickers label {
+      font-weight: 600;
+      line-height: 1.5rem;
+      margin-top: .75rem;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    aside {
+      background-color: unset;
+      margin: unset;
+      padding: unset;
+    }
+
+    .container > div h1,
+    .container > div h2,
+    .container > div h3,
+    .container > div p, 
+    .container > div small {
+      font-size: unset;
+      line-height: unset;
+      margin: unset;
+    }
+
+    .container > div {
+      border: var(--active-border-size) solid #EDEDED;
+      border-top: 0;
+      padding: var(--half-lheight) var(--base-lheight);
+      padding: var(--active-half-lheight) var(--active-base-lheight);
+    }
+
+    .container > div:first-of-type {
+      background-color: #DCDCDC;
+      border-top: var(--active-border-size) solid #DCDCDC;
+      border-color: #DCDCDC;
+      border-radius: 30px 30px 0 0;
+    }
+
+    .container > div:nth-of-type(2) {
+      background-color: #EDEDED;
+    }
+
+    .container > div:nth-of-type(3) {
+      background-color: #F7F7F8;
+    }
+
+    .container > div:last-of-type {
+      border-radius: 0 0 30px 30px;
+    }
+
+    div.feedback {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      flex-flow: row wrap;
+    }
+
+    div.feedback > * {
+      /* flex: 1 1 50%; */
+    }
+
+    div.feedback .feedback-msg {
+      border-top: var(--active-border-size) solid #EDEDED;
+      flex-basis: 100%;
+      margin-top: var(--half-lheight);
+      padding-top: var(--half-lheight);
+    }
+
+    .container > div h1 {
+      font-size: var(--active-heading-size);
+      line-height: var(--active-heading-lheight);
+    }
+
+    .container > div h2,
+    .container > div h3,
+    .container > div p {
+      font-size: var(--active-para-size);
+      line-height: var(--active-para-lheight);
+    }
+
+    .container > div small {
+      font-size: var(--active-caption-size);
+    }
+
+    button.btn {
+      background-color: #0072DB;
+      border: 6px solid #0072DB;
+      border-radius: 12px;
+      color: #FFF;
+      font-size: var(--active-para-size);
+      line-height: var(--active-para-lheight);
+    }
+
+    button.secondary-btn {
+      background-color: #FFF;
+      color: #0072DB;
+    }
+
+  </style>
+  <link rel="stylesheet" href="./css/interaction.css">
+</head>
+<body>
+  <section class="value-pickers">
+    <strong>Value Pickers</strong>
+    <nav>
+      <label for="grade">Grade Level</label>
+      <select id="grade" name="grade">
+        <option value="11" selected=>Kindergarden</option>
+        <option value="10">1st Grade</option>
+        <option value="8">2-3 Grade</option>
+        <option value="7">4-5 Grade</option>
+        <option value="6">6-8 Grade</option>
+        <option value="5">9-12 Grade</option>
+      </select>
+      <label for="title-size">Title Size</label>
+      <select id="title-size" name="title-size">
+        <option value="lg">Large</option>
+        <option value="md" selected>Regular</option>
+        <option value="sm">Small</option>
+      </select>
+      <label for="border-size">Border Size</label>
+      <select id="border-size" name="border-size">
+        <option value="1">1px</option>
+        <option value="2">2px</option>
+        <option value="3">3px</option>
+        <option value="4">4px</option>
+        <option value="5">5px</option>
+        <option value="6" selected>6px</option>
+        <option value="7">7px</option>
+        <option value="8">8px</option>
+      </select>    
+    </nav>
+  </section>
+	<main id="root">
+		<section id="wrapper" style="display: flex; flex-flow: row wrap;">
+			<aside class="audio-controls">
+			<section class="non-rce-audio-controls">
+				<div class="controls-button-wrapper"><button id="audioControlPLay" class="audio-play "
+					aria-label="Click to Play Audio" title="Click to Play Audio" type="button"
+					tabindex="0"><span class="focusable" aria-hidden="false" tabindex="-1"></span></button>
+				</div>
+				<div class="controls-button-wrapper"><button id="audioControlRefresh" class="audio-refresh"
+					aria-label="Click to Refresh Audio" title="Click to Refresh Audio" type="button"
+					tabindex="0"><span class="focusable" aria-hidden="false" tabindex="-1"></span></button>
+				</div>
+			</section>
+			</aside>
+			<section class="container anatomy-main">
+				<div class="title">
+					<h1>Title</h1>
+				</div>
+				<div class="stem">
+					<h2>Stem</h2>
+				</div>
+				<div class="Tip">
+					<h2>Tip</h2>
+				</div>
+				<div class="interaction">
+					<p>Interaction Text</p>
+					<small>Caption Text</small>
+				</div>
+				<div class="feedback">
+					<p class="success">Canned Feedback</p>
+					<div class="btn-container">
+						<button class="btn secondary-btn" type="button">Secondary</button>
+						<button class="btn primary-btn" type="button">Primary</button>
+					</div>
+          <div class="feedback-msg">
+            <p>Feedback Message</p>
+          </div>
+				</div>
+			</section>
+			<aside class="widget-controls">
+				<section>
+				<div class="controls-button-wrapper"><button id="widgetControlRefresh" class="reset"
+					aria-label="Click to Refresh" title="Click to Refresh" type="button" tabindex="0"><span
+						class="focusable" aria-hidden="false" tabindex="-1"></span></button></div><span
+					role="alert" class="sc-bdVaJa jdrAbl"></span>
+				<div class="controls-button-wrapper"><button id="widgetControlTip" class="tip "
+					aria-label="Click for Tip" title="Click for Tip" type="button" tabindex="0"
+					aria-expanded="false"><span class="focusable" aria-hidden="false"
+						tabindex="-1"></span></button></div>
+				</section>
+			</aside>
+		</section>
+	</main>
+  <script type="text/javascript">
+
+    let grade = document.getElementById('grade');
+    
+    let root = document.documentElement;
+    grade.onchange = function () {
+      console.log(grade.value);
+      root.style.setProperty('--active-para-size', "var(--type-size-lv" + grade.value + ")");
+      root.style.setProperty('--active-heading-size', "var(--type-size-lv" + grade.value + ")");
+      root.style.setProperty('--active-caption-size', "var(--type-size-lv" + (grade.value - 2) + ")");
+      root.style.setProperty('--active-para-lheight', "var(--para-lheight-lv" + grade.value + ")");
+      root.style.setProperty('--active-base-lheight', "var(--para-lheight-lv" + grade.value + ")");
+    };
+
+    document.getElementById('title-size').onchange = function () {
+      console.log(this.value);
+      //if ()
+      switch (this.value) {
+        case 'lg':
+          root.style.setProperty('--active-heading-size', "var(--type-size-lv" + (Number(grade.value) + 1) + ")");
+          console.log(Number(grade.value) + 1);
+          break;
+        case 'md':
+          root.style.setProperty('--active-heading-size', "var(--type-size-lv" + grade.value + ")");
+          console.log(grade.value);
+          break; 
+        case 'sm':  
+          root.style.setProperty('--active-heading-size', "var(--type-size-lv" + (grade.value - 1) + ")");
+          console.log(grade.value - 1);
+          break;
+        default:  
+          break;  
+      }
+    }
+
+    document.getElementById('border-size').onchange = function () {
+      console.log(document.getElementById('border-size').value);
+      root.style.setProperty('--active-border-size', document.getElementById('border-size').value + 'px');
+    }
+
+
+  </script>
+</body>
+</html>
