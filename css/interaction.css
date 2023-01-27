@@ -128,10 +128,10 @@ html {
   font-size: unset;
 }
 
-body {
+/* body {
   padding-top: 3rem;
   display: block;
-}
+} */
 
 sub {
   vertical-align: sub !important;
@@ -176,7 +176,7 @@ sup {
 /* || 0.2 Source Grid intergration */
 #root {
   grid-template-columns: unset;
-  grid-auto-columns: calc((100vw - var(--gutter-width) * 2) / 12);
+  /* grid-auto-columns: calc((100vw - var(--gutter-width) * 2) / 12); */
 }
 
 #wrapper {
@@ -441,7 +441,7 @@ p.quill-source-editor {
 }
 
 /* || 2.X Layouts and Col Spans */
-#wrapper {
+/* #wrapper {
   grid-column: span 12;
 }
 
@@ -513,7 +513,7 @@ p.quill-source-editor {
   #wrapper[class*="ten-col"] {
     grid-column: span 10;
   }
-}
+} */
 
 #el_interaction {
   border: solid 2px #b2b2b2;

@@ -323,10 +323,17 @@
       --active-caption-size: calc(var(--type-size-lv9));
 
       --active-base-lheight: var(--para-lheight-lv11);
+      --active-threequart-lheight: calc(var(var(--active-base-lheight) * .75));
       --active-half-lheight: calc(var(--active-base-lheight) / 2);
       --active-quart-lheight: calc(var(--active-base-lheight) / 4);
+      --active-eigth-lheight: calc(var(--active-base-lheight) / 8);
 
       --active-border-size: 6px;
+
+      --active-col-span: span 6;
+
+      --active-lr-padding: var(--active-half-lheight);
+      --active-tb-padding: var(--active-base-lheight);
 
       --colstart: 5;
       --colspan: 6;
@@ -441,6 +448,11 @@
       padding: unset;
     }
 
+    main#root {
+      grid-column-end: var(--active-col-span);
+      padding-top: 3rem;
+    }
+
     .container > div h1,
     .container > div h2,
     .container > div h3,
@@ -454,8 +466,8 @@
     .container > div {
       border: var(--active-border-size) solid #EDEDED;
       border-top: 0;
-      padding: var(--half-lheight) var(--base-lheight);
-      padding: var(--active-half-lheight) var(--active-base-lheight);
+      /* padding: var(--half-lheight) var(--base-lheight); */
+      padding: var(--active-tb-padding) var(--active-lr-padding);
     }
 
     .container > div:first-of-type {
@@ -547,6 +559,12 @@
         <option value="md" selected>Regular</option>
         <option value="sm">Small</option>
       </select>
+      <label for="anatomy-size">Anatomy Size</label>
+      <select id="anatomy-size" name="anatomy-size">
+        <option value="lg">Large</option>
+        <option value="md" selected>Regular</option>
+        <option value="sm">Small</option>
+      </select>
       <label for="border-size">Border Size</label>
       <select id="border-size" name="border-size">
         <option value="1">1px</option>
@@ -558,6 +576,34 @@
         <option value="7">7px</option>
         <option value="8">8px</option>
       </select>    
+      <label for="col-span">Column Span</label>
+      <select id="col-span" name="col-span">
+        <option value="4">Span 4</option>
+        <option value="5">Span 5</option>
+        <option value="6" selected>Span 6</option>
+        <option value="7">Span 7</option>
+        <option value="8">Span 8</option>
+        <option value="9">Span 9</option>
+        <option value="10">Span 10</option>
+        <option value="11">Span 11</option>
+        <option value="12">Span 12</option>
+      </select>
+      <label for="tb-padding">Top, Bottom Padding</label>
+      <select id="tb-padding" name="tb-padding">
+        <option value="base" selected>1 Line Height</option>
+        <option value="threequart">3/4 Line Height</option>
+        <option value="half" >1/2 Line Height</option>
+        <option value="quart">1/4 Line Height</option>
+        <option value="eigth">1/8 Line Height</option>
+      </select>
+      <label for="lr-padding">Left, Right Padding</label>
+      <select id="lr-padding" name="lr-padding">
+        <option value="base">1 Line Height</option>
+        <option value="threequart">3/4 Line Height</option>
+        <option value="half" selected>1/2 Line Height</option>
+        <option value="quart">1/4 Line Height</option>
+        <option value="eigth">1/8 Line Height</option>
+      </select>
     </nav>
   </section>
 	<main id="root">
@@ -616,31 +662,72 @@
   <script type="text/javascript">
 
     let grade = document.getElementById('grade');
+    let gradeValue = Number(grade.value)
     
     let root = document.documentElement;
     grade.onchange = function () {
       console.log(grade.value);
-      root.style.setProperty('--active-para-size', "var(--type-size-lv" + grade.value + ")");
-      root.style.setProperty('--active-heading-size', "var(--type-size-lv" + grade.value + ")");
-      root.style.setProperty('--active-caption-size', "var(--type-size-lv" + (grade.value - 2) + ")");
-      root.style.setProperty('--active-para-lheight', "var(--para-lheight-lv" + grade.value + ")");
-      root.style.setProperty('--active-base-lheight', "var(--para-lheight-lv" + grade.value + ")");
+      root.style.setProperty('--active-para-size', 'var(--type-size-lv' + grade.value + ')');
+      root.style.setProperty('--active-heading-size', 'var(--type-size-lv' + grade.value + ')');
+      root.style.setProperty('--active-caption-size', 'var(--type-size-lv' + (grade.value - 2) + ')');
+      root.style.setProperty('--active-para-lheight', 'var(--para-lheight-lv' + grade.value + ')');
+      root.style.setProperty('--active-base-lheight', 'var(--para-lheight-lv' + grade.value + ')');
     };
 
     document.getElementById('title-size').onchange = function () {
+      console.log(grade.value, this.value);
+      if (grade.value == 11 || grade.value == 5) {
+        console.log('kindergarden');
+        switch (this.value) {
+          case 'lg':
+            root.style.setProperty('--active-heading-size', 'var(--type-size-lv' + (Number(grade.value) + 2) + ')');
+            console.log(Number(grade.value) + 1);
+            break;
+          case 'md':
+            root.style.setProperty('--active-heading-size', 'var(--type-size-lv' + grade.value + ')');
+            console.log(grade.value);
+            break; 
+          case 'sm':  
+            root.style.setProperty('--active-heading-size', 'var(--type-size-lv' + (grade.value - 1) + ')');
+            console.log(grade.value - 1);
+            break;
+          default:  
+            break;  
+        }
+        return;
+      } else {
+        switch (this.value) {
+          case 'lg':
+            root.style.setProperty('--active-heading-size', 'var(--type-size-lv' + (Number(grade.value) + 1) + ')');
+            console.log(Number(grade.value) + 1);
+            break;
+          case 'md':
+            root.style.setProperty('--active-heading-size', 'var(--type-size-lv' + grade.value + ')');
+            console.log(grade.value);
+            break; 
+          case 'sm':  
+            root.style.setProperty('--active-heading-size', 'var(--type-size-lv' + (grade.value - 1) + ')');
+            console.log(grade.value - 1);
+            break;
+          default:  
+            break;  
+        }
+      }
+    }
+
+    document.getElementById('anatomy-size').onchange = function () {
       console.log(this.value);
-      //if ()
       switch (this.value) {
         case 'lg':
-          root.style.setProperty('--active-heading-size', "var(--type-size-lv" + (Number(grade.value) + 1) + ")");
+          root.style.setProperty('--active-para-size', 'var(--type-size-lv' + (Number(grade.value) + 1) + ')');
           console.log(Number(grade.value) + 1);
           break;
         case 'md':
-          root.style.setProperty('--active-heading-size', "var(--type-size-lv" + grade.value + ")");
+          root.style.setProperty('--active-para-size', 'var(--type-size-lv' + grade.value + ')');
           console.log(grade.value);
           break; 
         case 'sm':  
-          root.style.setProperty('--active-heading-size', "var(--type-size-lv" + (grade.value - 1) + ")");
+          root.style.setProperty('--active-para-size', 'var(--type-size-lv' + (grade.value - 1) + ')');
           console.log(grade.value - 1);
           break;
         default:  
@@ -653,6 +740,20 @@
       root.style.setProperty('--active-border-size', document.getElementById('border-size').value + 'px');
     }
 
+    document.getElementById('col-span').onchange = function () {
+      console.log("here!", document.getElementById('col-span').value);
+      root.style.setProperty('--active-col-span', 'span ' + document.getElementById('col-span').value);
+    }
+
+    document.getElementById('lr-padding').onchange = function () {
+      console.log(this.value)
+      root.style.setProperty('--active-lr-padding', 'var(--active-' + this.value + '-lheight)');
+    }
+
+    document.getElementById('tb-padding').onchange = function () {
+      console.log(this.value)
+      root.style.setProperty('--active-tb-padding', 'var(--active-' + this.value + '-lheight)');
+    }
 
   </script>
 </body>
