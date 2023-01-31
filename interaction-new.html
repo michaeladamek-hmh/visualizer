@@ -323,17 +323,24 @@
       --active-caption-size: calc(var(--type-size-lv9));
 
       --active-base-lheight: var(--para-lheight-lv11);
-      --active-threequart-lheight: calc(var(var(--active-base-lheight) * .75));
+      --active-threequart-lheight: calc(var(--active-base-lheight) * .75);
       --active-half-lheight: calc(var(--active-base-lheight) / 2);
       --active-quart-lheight: calc(var(--active-base-lheight) / 4);
       --active-eigth-lheight: calc(var(--active-base-lheight) / 8);
 
-      --active-border-size: 6px;
+      --active-col-span: span 8;
 
-      --active-col-span: span 6;
-
-      --active-lr-padding: var(--active-half-lheight);
       --active-tb-padding: var(--active-base-lheight);
+      --active-lr-padding: var(--active-half-lheight);
+
+      --active-border-size: 6px;
+      --active-border-radius: 30px;
+
+      --active-btn-tb-padding: var(--active-quart-lheight);
+      --active-btn-lr-padding: var(--active-half-lheight);
+
+      --active-btn-border-size: 6px;
+      --active-btn-border-radius: 12px;
 
       --colstart: 5;
       --colspan: 6;
@@ -416,6 +423,8 @@
       background-color: #EDEDED;
       height: 100vh;
       font-size: 1rem;
+      line-height: 1.2;
+      overflow: auto;
       padding: 1rem;
       position: fixed;
       right: 0;
@@ -427,6 +436,10 @@
       font-size: 1.5rem;
     }
 
+    .value-pickers b {
+      margin-top: 2rem;
+    }
+
     .value-pickers nav {
       display: flex;
       flex-flow: column nowrap;
@@ -435,7 +448,7 @@
     .value-pickers label {
       font-weight: 600;
       line-height: 1.5rem;
-      margin-top: .75rem;
+      margin-top: .5rem;
     }
 
     * {
@@ -465,16 +478,45 @@
 
     .container > div {
       border: var(--active-border-size) solid #EDEDED;
-      border-top: 0;
-      /* padding: var(--half-lheight) var(--base-lheight); */
       padding: var(--active-tb-padding) var(--active-lr-padding);
     }
 
-    .container > div:first-of-type {
+    /* .container > div.radius {
+      border-radius: var(--active-border-radius) var(--active-border-radius) 0 0;
+    } */
+
+    .container > div.hidden {
+      display: none;
+    }
+
+    .container > div:first-of-type  {
       background-color: #DCDCDC;
-      border-top: var(--active-border-size) solid #DCDCDC;
       border-color: #DCDCDC;
-      border-radius: 30px 30px 0 0;
+      border-radius: var(--active-border-radius) var(--active-border-radius) 0 0;
+    }
+
+    /* .container > div:first-of-type ~ div:not(:last-of-type) {
+      border-bottom: 0;
+      border-top: var(--active-border-size) solic #EDEDED;
+    } */
+
+    .container > div.hidden + div:not(.hidden) {
+      border-radius: var(--active-border-radius) var(--active-border-radius) 0 0;
+    }
+
+    .container > div:first-of-type:not(.hidden) ~ div:not(:last-of-type) {
+      border-bottom: var(--active-border-size) solid #EDEDED;
+      border-top: 0;
+      border-radius: 0 !important;
+    }
+
+    .container > div:first-of-type:is(.hidden) {
+      border-bottom: unset;
+    }
+
+    .container > div:first-of-type:is(.hidden) ~ div:is(.hidden) + div:not(:last-of-type) {
+      border-radius: unset;
+      border-top: unset;
     }
 
     .container > div:nth-of-type(2) {
@@ -486,25 +528,27 @@
     }
 
     .container > div:last-of-type {
-      border-radius: 0 0 30px 30px;
+      border-bottom: var(--active-border-size) solid #EDEDED;
+      border-radius: 0 0 var(--active-border-radius) var(--active-border-radius);
+      border-top: unset;
     }
 
-    div.feedback {
+    div.feedback-bar {
       align-items: center;
       display: flex;
       justify-content: space-between;
       flex-flow: row wrap;
     }
 
-    div.feedback > * {
+    div.feedback-bar > * {
       /* flex: 1 1 50%; */
     }
 
-    div.feedback .feedback-msg {
+    div.feedback-bar .feedback-msg {
       border-top: var(--active-border-size) solid #EDEDED;
       flex-basis: 100%;
-      margin-top: var(--half-lheight);
-      padding-top: var(--half-lheight);
+      margin-top: var(--active-tb-padding);
+      padding-top: var(--active-tb-padding);
     }
 
     .container > div h1 {
@@ -525,11 +569,17 @@
 
     button.btn {
       background-color: #0072DB;
-      border: 6px solid #0072DB;
-      border-radius: 12px;
+      border: var(--active-btn-border-size) solid #0072DB;
+      border-radius: var(--active-btn-border-radius);
       color: #FFF;
       font-size: var(--active-para-size);
-      line-height: var(--active-para-lheight);
+      line-height: 1.2;
+      padding: var(--active-btn-tb-padding) var(--active-btn-lr-padding);
+      margin-left: calc(var(--active-btn-lr-padding) /2);
+    }
+
+    button.btn:first-of-type {
+      margin-left: 0;
     }
 
     button.secondary-btn {
@@ -564,25 +614,14 @@
         <option value="lg">Large</option>
         <option value="md" selected>Regular</option>
         <option value="sm">Small</option>
-      </select>
-      <label for="border-size">Border Size</label>
-      <select id="border-size" name="border-size">
-        <option value="1">1px</option>
-        <option value="2">2px</option>
-        <option value="3">3px</option>
-        <option value="4">4px</option>
-        <option value="5">5px</option>
-        <option value="6" selected>6px</option>
-        <option value="7">7px</option>
-        <option value="8">8px</option>
-      </select>    
+      </select>  
       <label for="col-span">Column Span</label>
       <select id="col-span" name="col-span">
         <option value="4">Span 4</option>
         <option value="5">Span 5</option>
-        <option value="6" selected>Span 6</option>
+        <option value="6">Span 6</option>
         <option value="7">Span 7</option>
-        <option value="8">Span 8</option>
+        <option value="8" selected>Span 8</option>
         <option value="9">Span 9</option>
         <option value="10">Span 10</option>
         <option value="11">Span 11</option>
@@ -604,6 +643,66 @@
         <option value="quart">1/4 Line Height</option>
         <option value="eigth">1/8 Line Height</option>
       </select>
+      <label for="border-size">Border Size</label>
+      <select id="border-size" name="border-size">
+        <option value="1">1px</option>
+        <option value="2">2px</option>
+        <option value="3">3px</option>
+        <option value="4">4px</option>
+        <option value="5">5px</option>
+        <option value="6" selected>6px</option>
+        <option value="7">7px</option>
+        <option value="8">8px</option>
+      </select>  
+      <label for="border-radius">Border Radius</label>
+      <input id="border-radius" name="border-radius" type="number" max="100" value="30" />
+      <b>Control Buttons</b>
+      <label for="btn-tb-padding">Top, Bottom Padding</label>
+      <select id="btn-tb-padding" name="btn-tb-padding">
+        <option value="half">1/2 Line Height</option>
+        <option value="quart" selected>1/4 Line Height</option>
+        <option value="eigth">1/8 Line Height</option>
+      </select>
+      <label for="btn-lr-padding">Left, Right Padding</label>
+      <select id="btn-lr-padding" name="btn-lr-padding">
+        <option value="half" selected>1/2 Line Height</option>
+        <option value="quart">1/4 Line Height</option>
+        <option value="eigth">1/8 Line Height</option>
+      </select>
+      <label for="btn-border-size">Border Size</label>
+      <select id="btn-border-size" name="btn-border-size">
+        <option value="1">1px</option>
+        <option value="2">2px</option>
+        <option value="3">3px</option>
+        <option value="4">4px</option>
+        <option value="5">5px</option>
+        <option value="6" selected>6px</option>
+        <option value="7">7px</option>
+        <option value="8">8px</option>
+      </select>  
+      <label for="btn-border-radius">Border Radius</label>
+      <input id="btn-border-radius" name="btn-border-radius" type="number" max="50" value="12" />
+      <b>Anatomy Builder</b>
+      <label class="anatomy" for="title">
+        <input type="checkbox" id="title" name="title" checked />
+        Title
+      </label>
+      <label class="anatomy" for="stem">
+        <input type="checkbox" id="stem" name="stem" checked />
+        Stem
+      </label>
+      <label class="anatomy" for="stimulas">
+        <input type="checkbox" id="stimulas" name="stimulas" />
+        Stimulas
+      </label>
+      <label class="anatomy" for="tip">
+        <input type="checkbox" id="tip" name="tip" checked />
+        Tip
+      </label>
+      <label class="anatomy" for="feedback-bar">
+        <input type="checkbox" id="feedback-bar" name="feedback-bar" checked />
+        Feedback Bar
+      </label>
     </nav>
   </section>
 	<main id="root">
@@ -630,11 +729,14 @@
 				<div class="Tip">
 					<h2>Tip</h2>
 				</div>
+				<div class="stimulas hidden">
+					<p>Stimulas Text</p>
+				</div>
 				<div class="interaction">
 					<p>Interaction Text</p>
 					<small>Caption Text</small>
 				</div>
-				<div class="feedback">
+				<div class="feedback-bar">
 					<p class="success">Canned Feedback</p>
 					<div class="btn-container">
 						<button class="btn secondary-btn" type="button">Secondary</button>
@@ -740,6 +842,11 @@
       root.style.setProperty('--active-border-size', document.getElementById('border-size').value + 'px');
     }
 
+    document.getElementById('border-radius').onchange = function () {
+      console.log(document.getElementById('border-radius').value);
+      root.style.setProperty('--active-border-radius', document.getElementById('border-radius').value + 'px');
+    }
+
     document.getElementById('col-span').onchange = function () {
       console.log("here!", document.getElementById('col-span').value);
       root.style.setProperty('--active-col-span', 'span ' + document.getElementById('col-span').value);
@@ -754,6 +861,46 @@
       console.log(this.value)
       root.style.setProperty('--active-tb-padding', 'var(--active-' + this.value + '-lheight)');
     }
+
+    document.getElementById('btn-lr-padding').onchange = function () {
+      console.log(this.value)
+      root.style.setProperty('--active-btn-lr-padding', 'var(--active-' + this.value + '-lheight)');
+    }
+
+    document.getElementById('btn-tb-padding').onchange = function () {
+      console.log(this.value)
+      root.style.setProperty('--active-btn-tb-padding', 'var(--active-' + this.value + '-lheight)');
+    }
+
+    document.getElementById('btn-border-size').onchange = function () {
+      console.log(document.getElementById('btn-border-size').value);
+      root.style.setProperty('--active-btn-border-size', document.getElementById('btn-border-size').value + 'px');
+    }
+
+    document.getElementById('btn-border-radius').onchange = function () {
+      console.log(document.getElementById('btn-border-radius').value);
+      root.style.setProperty('--active-btn-border-radius', document.getElementById('btn-border-radius').value + 'px');
+    }
+
+    document.querySelectorAll('input[type=checkbox]').forEach(box => {
+      box.addEventListener('click', function(event) {
+        let parent = document.querySelector('div.' + event.target.name);
+        console.log(parent);
+        if (event.target.checked === true) {
+          parent.classList.remove('hidden');
+        } else {
+          parent.classList.add('hidden');
+        }
+        
+        // if (parent.classList.contains('radius')) {
+        //   parent.classList.remove('radius');
+        // }
+
+        // console.log(document.querySelector('.container').children)
+      })
+    })
+
+
 
   </script>
 </body>

@@ -164,61 +164,7 @@
     font-stretch: normal;
     src: url("fonts/sourcecodevariable-italic.ttf") format("truetype");
   }
-  
-  :root {
-    --base-fontsize: 1.875rem;
-    --col-width: calc((100vw - 2rem) / 12);
-    /* Common across statics and interactions */
-    --base-lheight: 2.875rem;
-    --half-lheight: 1.4375rem;
-    --quart-lheight: 0.75rem;
-    --base-fontsize: 1.875rem;
-    --col-width: calc((100vw - 2rem) / 12);
-    --gutter-width: 1rem;
-    --ui-button: 3rem;
-    --ui-icon: 1.875rem;
-  }
-  
-  @media (min-width: 40.625rem) {
-    :root {
-      --base-fontsize: 2.25rem;
-      --col-width: calc((100vw - (9.75rem - var(--base-lheight))) / 12);
-      --base-lheight: 3.375rem;
-      --half-lheight: 1.6875rem;
-      --quart-lheight: 0.875rem;
-      --base-fontsize: 2.25rem;
-      --col-width: calc((100vw - (9.75rem - var(--base-lheight))) / 12);
-      --gutter-width: Max(calc(4.875rem - var(--half-lheight)), calc((100vw - 80rem) / 2));
-      --ui-button: 4rem;
-      --ui-icon: 2.5rem;
-    }
-  }
-  
-  @media (min-width: 80rem) {
-    :root {
-      --base-fontsize: 2.75rem;
-      --col-width: calc((100vw - (9.75rem - var(--base-lheight))) / 12);
-      --base-lheight: 4.125rem;
-      --half-lheight: 2.0625rem;
-      --quart-lheight: 1.0625rem;
-      --body-lg: 4rem;
-      --body-md: 2.75rem;
-      --body-sm: 2.25rem;
-      --caption: 1.875rem;
-      --body-lg-lheight: 5rem;
-      --body-md-lheight: 4.125rem;
-      --body-sm-lheight: 3.375rem;
-      --caption-lheight: 2.875rem;
-      --body-lg-head-lheight: 5rem;
-      --body-md-head-lheight: 3.5rem;
-    }
-  }
-  
-  @media (min-width: 93.875rem) {
-    :root {
-      --col-width: calc(80rem / 12);
-    }
-  }
+
   
   body,
   .source__grid {
