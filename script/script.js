@@ -130,8 +130,6 @@ document.querySelectorAll('input.anatomy').forEach(anatomyBox => {
     let feedbackBar = document.querySelector('div.feedback-bar');
 
     if (feedbackBar.classList.contains('hidden')) {
-      console.log('feedback-bar is hidden')
-      console.log(feedbackBar.previousSibling.previousSibling)
       feedbackBar.previousSibling.previousSibling.classList.add('bottom-border-radius')
     } else {
       feedbackBar.previousSibling.previousSibling.classList.remove('bottom-border-radius')
@@ -176,3 +174,52 @@ document.querySelectorAll('input.feedback-message').forEach(feedbackBox => {
     }
   })
 })
+
+document.getElementById('icon-size').onchange = function() {
+  console.log(this.value, document.querySelectorAll('.controls-button-wrapper button'));
+  document.querySelectorAll('.controls-button-wrapper button').forEach(button => {
+    button.style.backgroundSize = this.value;
+  })
+}
+
+document.getElementById('btn-width').onchange = function() {
+  console.log(this.value);
+  document.querySelectorAll('.controls-button-wrapper button').forEach(button => {
+    button.style.width = this.value;
+  })
+}
+
+document.getElementById('btn-height').onchange = function() {
+  console.log(this.value);
+  document.querySelectorAll('.controls-button-wrapper button').forEach(button => {
+    button.style.height = this.value;
+  })
+}
+
+document.getElementById('btn-radius').onchange = function() {
+  console.log(this.value);
+  document.querySelectorAll('.controls-button-wrapper button').forEach(button => {
+    button.style.borderRadius = this.value + 'px';
+  })
+}
+
+document.getElementById('btn-radius').onchange = function() {
+  console.log(this.value);
+  document.querySelectorAll('.controls-button-wrapper button').forEach(button => {
+    button.style.borderRadius = this.value + 'px';
+  })
+}
+
+document.getElementById('btn-space-between').onchange = function() {
+  console.log(this.value);
+  document.querySelectorAll('.controls-button-wrapper button').forEach(button => {
+    button.style.marginRight = this.value + 'px';
+  })
+}
+
+document.getElementById('btn-space-below').onchange = function() {
+  console.log(this.value);
+  document.querySelector('.container').style.marginTop = this.value + 'px';
+}
+
+
